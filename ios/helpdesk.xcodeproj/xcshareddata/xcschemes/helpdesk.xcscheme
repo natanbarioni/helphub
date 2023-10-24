@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-               BuildableName = "helpdesk.app"
-               BlueprintName = "helpdesk"
-               ReferencedContainer = "container:helpdesk.xcodeproj">
+               BuildableName = "helphub.app"
+               BlueprintName = "helphub"
+               ReferencedContainer = "container:helphub.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -33,9 +33,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "00E356ED1AD99517003FC87E"
-               BuildableName = "helpdeskTests.xctest"
-               BlueprintName = "helpdeskTests"
-               ReferencedContainer = "container:helpdesk.xcodeproj">
+               BuildableName = "helphubTests.xctest"
+               BlueprintName = "helphubTests"
+               ReferencedContainer = "container:helphub.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -55,9 +55,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "helpdesk.app"
-            BlueprintName = "helpdesk"
-            ReferencedContainer = "container:helpdesk.xcodeproj">
+            BuildableName = "helphub.app"
+            BlueprintName = "helphub"
+            ReferencedContainer = "container:helphub.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -72,9 +72,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "helpdesk.app"
-            BlueprintName = "helpdesk"
-            ReferencedContainer = "container:helpdesk.xcodeproj">
+            BuildableName = "helphub.app"
+            BlueprintName = "helphub"
+            ReferencedContainer = "container:helphub.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

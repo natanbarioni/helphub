@@ -9,7 +9,7 @@ export function Header() {
   return (
     <Container>
       <Greeting>
-        <Title>HelpDesk</Title>
+        <Title>helphub</Title>
         <SubTitle>Conte conosco, estamos aqui para ajudar.</SubTitle>
       </Greeting>
 
