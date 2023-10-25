@@ -14,6 +14,7 @@ export function AccountForm() {
 
   function handleNewAccount() {
     setIsLoading(true);
+
     auth()
       .createUserWithEmailAndPassword(email, password)
       .then(() => Alert.alert("Conta", "Cadastrado com sucesso!"))
