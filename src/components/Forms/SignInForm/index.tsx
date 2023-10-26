@@ -21,12 +21,20 @@ export function SignInForm() {
 
     auth()
       .signInWithEmailAndPassword(email, password)
-      .then(() => Alert.alert("Logado com sucesso!"))
-      .catch((error) => console.log(error))
-      .finally(() => setIsLoading(false));
+      .catch((error) => {
+        setIsLoading(false);
+        console.log(error);
+      });
   }
 
-  function handleForgotPassword() {}
+  function handleForgotPassword() {
+    auth()
+      .sendPasswordResetEmail(email)
+      .then(() =>
+        Alert.alert("Redefinir senha", "Enviamos um e-mail para você!")
+      )
+      .catch((error) => console.log(error));
+  }
 
   return (
     <Form>

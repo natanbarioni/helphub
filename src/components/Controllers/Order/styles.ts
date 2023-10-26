@@ -1,7 +1,7 @@
-import styled from 'styled-components/native';
+import styled from "styled-components/native";
 
 export type OrderStyleProps = {
-  status: 'open' | 'closed';
+  status: "open" | "closed";
 };
 
 export const Container = styled.View`
@@ -18,7 +18,8 @@ export const Content = styled.View`
   padding: 0 15px;
   justify-content: center;
   background-color: ${({ theme }) => theme.COLORS.WHITE};
-  border-radius: 10px;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
 `;
 
 export const Header = styled.View`
@@ -28,7 +29,10 @@ export const Header = styled.View`
 export const Status = styled.View<OrderStyleProps>`
   width: 10px;
   height: 94px;
-  background-color: ${({ theme, status }) => status === 'open' ? theme.COLORS.SECONDARY : theme.COLORS.PRIMARY};
+  background-color: ${({ theme, status }) =>
+    status === "open" ? theme.COLORS.SECONDARY : theme.COLORS.PRIMARY};
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
 `;
 
 export const Title = styled.Text`
@@ -38,7 +42,6 @@ export const Title = styled.Text`
   color: ${({ theme }) => theme.COLORS.TEXT};
   margin-bottom: 18px;
 `;
-
 
 export const Info = styled.View`
   flex-direction: row;
@@ -51,10 +54,9 @@ export const Footer = styled.View`
   flex-direction: row;
 `;
 
-
 export const Label = styled.Text`
   font-size: 12px;
   font-family: ${({ theme }) => theme.FONTS.TEXT};
-  color: ${({ theme }) => theme.COLORS.SUBTEXT};  
+  color: ${({ theme }) => theme.COLORS.SUBTEXT};
   margin-left: 3px;
 `;
