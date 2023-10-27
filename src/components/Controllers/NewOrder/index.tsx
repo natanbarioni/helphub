@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useEffect } from "react";
 import {
   BottomSheetView,
   BottomSheetModal,
@@ -8,13 +8,18 @@ import {
 import { Background } from "./styles";
 import { Button } from "@components/Controllers/Button";
 import { OrderForm } from "@components/Forms/OrderForm";
+import { PropsNewOrder } from "./Models";
 
-export function NewOrder() {
+export function NewOrder({ isOpen, setIsOpen }: PropsNewOrder) {
   const bottomSheetRef = useRef<BottomSheetModal>(null);
 
   function handleSnapPress() {
     bottomSheetRef.current?.present();
   }
+
+  useEffect(() => {
+    isOpen && handleSnapPress();
+  }, [isOpen]);
 
   return (
     <>
@@ -23,6 +28,7 @@ export function NewOrder() {
       <BottomSheetModalProvider>
         <BottomSheetModal
           ref={bottomSheetRef}
+          onDismiss={() => setIsOpen && setIsOpen(false)}
           snapPoints={["65%"]}
           style={{ padding: 24 }}
           handleIndicatorStyle={{
