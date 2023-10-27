@@ -1,6 +1,10 @@
 import React from "react";
 import { MaterialIcons } from "@expo/vector-icons";
 import { useTheme } from "styled-components/native";
+import { Alert } from "react-native";
+
+import { formatDate } from "../../../../src/constants/functions";
+import firestore from "@react-native-firebase/firestore";
 
 import {
   Container,
@@ -11,40 +15,40 @@ import {
   Label,
   Info,
   Footer,
-  OrderStyleProps,
-  LabelEquipment,
 } from "./styles";
+import { Props } from "./Models";
 
-export type OrderProps = OrderStyleProps & {
-  id: string;
-  patrimony: string;
-  equipment: string;
-  description: string;
-  created_at: {
-    nanoseconds: number;
-    seconds: number;
-  };
-};
-
-type Props = {
-  data: OrderProps;
-};
-
-export function Order({ data }: Props) {
+export function Order({ data, setIsOpen }: Props) {
   const theme = useTheme();
 
-  const date = new Date(data.created_at.seconds * 1000);
+  function handlerDeleteOrder() {
+    firestore()
+      .collection("orders")
+      .doc(data.id)
+      .delete()
+      .then(() => {
+        Alert.alert("Chamado deletado.");
+      })
+      .catch((error) => console.log(error));
+  }
 
-  const dia = date.getDate().toString().padStart(2, "0");
-  const mes = (date.getMonth() + 1).toString().padStart(2, "0");
-  const ano = date.getFullYear();
-  const hora = date.getHours().toString().padStart(2, "0");
-  const minutos = date.getMinutes().toString().padStart(2, "0");
-
-  const dataFormatada = `${dia}/${mes}/${ano} às ${hora}h:${minutos}`;
+  const handlerOrder = () => {
+    Alert.alert("O que deseja fazer?", "Escolhe uma opção", [
+      {
+        text: "Excluir",
+        onPress: () => handlerDeleteOrder(),
+      },
+      {
+        text: "Editar",
+        onPress: () => setIsOpen && setIsOpen(true),
+        style: "cancel",
+      },
+      { text: "Cancelar", onPress: () => null },
+    ]);
+  };
 
   return (
-    <Container>
+    <Container activeOpacity={0.5} onPress={handlerOrder}>
       <Status status={data.status} />
 
       <Content>
@@ -68,7 +72,7 @@ export function Order({ data }: Props) {
               size={16}
               color={theme.COLORS.SUBTEXT}
             />
-            <Label>{dataFormatada}</Label>
+            <Label>{formatDate(data.created_at)}</Label>
           </Info>
 
           <Info>

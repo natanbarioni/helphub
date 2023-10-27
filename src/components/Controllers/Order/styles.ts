@@ -4,7 +4,7 @@ export type OrderStyleProps = {
   status: "open" | "closed";
 };
 
-export const Container = styled.View`
+export const Container = styled.TouchableOpacity`
   width: 100%;
   height: 94px;
   flex-direction: row;
