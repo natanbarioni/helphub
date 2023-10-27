@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 
 import firestore from "@react-native-firebase/firestore";
+import auth from "@react-native-firebase/auth";
 
 import { Form, Title } from "./styles";
 import { Input } from "@components/Controllers/Input";
@@ -16,10 +17,12 @@ export function OrderForm() {
 
   function handleNewOrder() {
     setIsLoading(true);
+    const user = auth().currentUser;
 
     firestore()
       .collection("orders")
       .add({
+        uid: user?.uid,
         patrimony,
         description,
         equipment,
