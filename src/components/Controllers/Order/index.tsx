@@ -1,4 +1,6 @@
 import React from "react";
+import { useDispatch } from "react-redux";
+
 import { MaterialIcons } from "@expo/vector-icons";
 import { useTheme } from "styled-components/native";
 import { Alert } from "react-native";
@@ -16,10 +18,17 @@ import {
   Info,
   Footer,
 } from "./styles";
-import { Props } from "./Models";
+import { OrderProps } from "./Models";
 
-export function Order({ data, setIsOpen }: Props) {
+export function Order({ data }: OrderProps) {
   const theme = useTheme();
+  const dispatch = useDispatch();
+
+  const handlerEdit = () => {
+    dispatch({
+      type: "edit/open",
+    });
+  };
 
   function handlerDeleteOrder() {
     firestore()
@@ -40,7 +49,7 @@ export function Order({ data, setIsOpen }: Props) {
       },
       {
         text: "Editar",
-        onPress: () => setIsOpen && setIsOpen(true),
+        onPress: () => handlerEdit(),
         style: "cancel",
       },
       { text: "Cancelar", onPress: () => null },

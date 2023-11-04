@@ -1,4 +1,4 @@
-export type OrderProps = OrderStyleProps & {
+export type DataProps = OrderStyleProps & {
   id: string;
   patrimony: string;
   equipment: string;
@@ -9,7 +9,6 @@ export type OrderProps = OrderStyleProps & {
   };
 };
 
-export type Props = {
-  data: OrderProps;
-  setIsOpen?: React.Dispatch<React.SetStateAction<boolean>>;
+export type OrderProps = {
+  data: DataProps;
 };

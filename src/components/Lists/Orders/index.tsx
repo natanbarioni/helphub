@@ -9,13 +9,12 @@ import { Order } from "@components/Controllers/Order";
 import { Container, Header, Title, Counter } from "./styles";
 
 import firestore from "@react-native-firebase/firestore";
-import { OrderProps } from "@components/Controllers/Order/Models";
-import { PropsOrders } from "./Models";
+import { DataProps } from "@components/Controllers/Order/Models";
 
-export function Orders({setIsOpen}: PropsOrders) {
+export function Orders() {
   const [status, setStatus] = useState("open");
   const [isLoading, setIsLoading] = useState(false);
-  const [orders, setOrders] = useState<OrderProps[]>([]);
+  const [orders, setOrders] = useState<DataProps[]>([]);
 
   useEffect(() => {
     setIsLoading(true);
@@ -31,7 +30,7 @@ export function Orders({setIsOpen}: PropsOrders) {
               id: doc.id,
               ...doc.data(),
             };
-          }) as OrderProps[];
+          }) as DataProps[];
 
           setOrders(data);
           setIsLoading(false);
@@ -56,7 +55,7 @@ export function Orders({setIsOpen}: PropsOrders) {
         <FlatList
           data={orders}
           keyExtractor={(item) => item.id}
-          renderItem={({ item }) => <Order data={item} setIsOpen={setIsOpen}/>}
+          renderItem={({ item }) => <Order data={item} />}
           contentContainerStyle={{ paddingBottom: 100 }}
           showsVerticalScrollIndicator={false}
           style={{ flex: 1 }}

@@ -1,4 +1,5 @@
 import React, { useRef, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import {
   BottomSheetView,
   BottomSheetModal,
@@ -8,10 +9,21 @@ import {
 import { Background } from "./styles";
 import { Button } from "@components/Controllers/Button";
 import { OrderForm } from "@components/Forms/OrderForm";
-import { PropsNewOrder } from "./Models";
+import { RootState } from "src/redux/Models";
 
-export function NewOrder({ isOpen, setIsOpen }: PropsNewOrder) {
+export function NewOrder() {
   const bottomSheetRef = useRef<BottomSheetModal>(null);
+
+  const { isOpen } = useSelector(
+    (rootReducer: RootState) => rootReducer.editReducer
+  );
+  const dispatch = useDispatch();
+
+  const onDismiss = () => {
+    dispatch({
+      type: "edit/close",
+    });
+  };
 
   function handleSnapPress() {
     bottomSheetRef.current?.present();
@@ -28,7 +40,7 @@ export function NewOrder({ isOpen, setIsOpen }: PropsNewOrder) {
       <BottomSheetModalProvider>
         <BottomSheetModal
           ref={bottomSheetRef}
-          onDismiss={() => setIsOpen && setIsOpen(false)}
+          onDismiss={() => onDismiss()}
           snapPoints={["65%"]}
           style={{ padding: 24 }}
           handleIndicatorStyle={{
