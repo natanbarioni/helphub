@@ -1,6 +1,12 @@
-import React from 'react';
-import { MaterialIcons } from '@expo/vector-icons';
-import { useTheme } from 'styled-components/native';
+import React from "react";
+import { useDispatch } from "react-redux";
+
+import { MaterialIcons } from "@expo/vector-icons";
+import { useTheme } from "styled-components/native";
+import { Alert } from "react-native";
+
+import { formatDate } from "../../../../src/constants/functions";
+import firestore from "@react-native-firebase/firestore";
 
 import {
   Container,
@@ -11,51 +17,80 @@ import {
   Label,
   Info,
   Footer,
-  OrderStyleProps
-} from './styles';
+} from "./styles";
+import { OrderProps } from "./Models";
 
-
-export type OrderProps = OrderStyleProps & {
-  id: string;
-  patrimony: string;
-  equipment: string;
-  description: string;
-}
-
-type Props = {
-  data: OrderProps;
-};
-
-export function Order({ data }: Props) {
+export function Order({ data }: OrderProps) {
   const theme = useTheme();
+  const dispatch = useDispatch();
+
+  const handlerEdit = () => {
+    dispatch({
+      type: "edit/open",
+    });
+  };
+
+  function handlerDeleteOrder() {
+    firestore()
+      .collection("orders")
+      .doc(data.id)
+      .delete()
+      .then(() => {
+        Alert.alert("Chamado deletado.");
+      })
+      .catch((error) => console.log(error));
+  }
+
+  const handlerOrder = () => {
+    Alert.alert("O que deseja fazer?", "Escolhe uma opção", [
+      {
+        text: "Excluir",
+        onPress: () => handlerDeleteOrder(),
+      },
+      {
+        text: "Editar",
+        onPress: () => handlerEdit(),
+        style: "cancel",
+      },
+      { text: "Cancelar", onPress: () => null },
+    ]);
+  };
 
   return (
-    <Container>
+    <Container activeOpacity={0.5} onPress={handlerOrder}>
       <Status status={data.status} />
 
       <Content>
         <Header>
-          <Title>Computador Desktop</Title>
+          <Title>{data.description}</Title>
           <MaterialIcons
             name={data.status === "open" ? "hourglass-empty" : "check-circle"}
             size={24}
-            color={data.status === "open" ? theme.COLORS.SECONDARY : theme.COLORS.PRIMARY}
+            color={
+              data.status === "open"
+                ? theme.COLORS.SECONDARY
+                : theme.COLORS.PRIMARY
+            }
           />
         </Header>
 
         <Footer>
           <Info>
-            <MaterialIcons name="schedule" size={16} color={theme.COLORS.SUBTEXT} />
-            <Label>
-              20/01/22 às 14h
-            </Label>
+            <MaterialIcons
+              name="calendar-today"
+              size={16}
+              color={theme.COLORS.SUBTEXT}
+            />
+            <Label>{formatDate(data.created_at)}</Label>
           </Info>
 
           <Info>
-            <MaterialIcons name="my-location" size={16} color={theme.COLORS.SUBTEXT} />
-            <Label>
-              402345
-            </Label>
+            <MaterialIcons
+              name="computer"
+              size={16}
+              color={theme.COLORS.SUBTEXT}
+            />
+            <Label>{data.patrimony}</Label>
           </Info>
         </Footer>
       </Content>

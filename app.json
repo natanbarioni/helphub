@@ -1,5 +1,12 @@
 {
   "expo": {
+    "android": {
+      "googleServicesFile": "./android/app/google-services.json",
+      "package": "com.helphub"
+    },
+    "plugins": [
+      "@react-native-firebase/app"
+    ],
     "name": "helphub",
     "slug": "helphub",
     "version": "1.0.0",
