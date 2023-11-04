@@ -28,6 +28,15 @@ export function Order({ data }: OrderProps) {
     dispatch({
       type: "edit/open",
     });
+    dispatch({
+      type: "edit/edit",
+      payload: {
+        id: data.id,
+        editPatrimony: data.patrimony,
+        editEquipment: data.equipment,
+        editDescription: data.description,
+      },
+    });
   };
 
   function handlerDeleteOrder() {

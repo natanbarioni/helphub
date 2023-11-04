@@ -29,8 +29,13 @@ export function NewOrder() {
     bottomSheetRef.current?.present();
   }
 
+  function handleClose() {
+    bottomSheetRef.current?.forceClose();
+  }
+
   useEffect(() => {
     isOpen && handleSnapPress();
+    !isOpen && handleClose();
   }, [isOpen]);
 
   return (

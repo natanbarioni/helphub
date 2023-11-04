@@ -1,10 +1,11 @@
 import { actionProps, initialStateProps } from "./Models";
 
 const initialState: initialStateProps = {
+  id: "",
   isOpen: false,
-  patrimony: "",
-  equipment: "",
-  description: "",
+  editPatrimony: "",
+  editEquipment: "",
+  editDescription: "",
 };
 
 const editReducer = (
@@ -17,6 +18,16 @@ const editReducer = (
 
   if (action.type === "edit/close") {
     return { ...state, isOpen: false };
+  }
+
+  if (action.type === "edit/edit") {
+    return {
+      ...state,
+      id: action.payload.id,
+      editPatrimony: action.payload.editPatrimony,
+      editEquipment: action.payload.editEquipment,
+      editDescription: action.payload.editDescription,
+    };
   }
 
   return state;
