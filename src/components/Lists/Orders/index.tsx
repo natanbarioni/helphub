@@ -22,10 +22,10 @@ export function Orders() {
     if (user) {
       const subscriber = firestore()
         .collection("orders")
-        .where("status", "==", status)
-        .where('uid', '==', user?.uid)
+        .where("status", "in", status === "all" ? ["open", "closed"] : [status])
+        .where("uid", "==", user?.uid)
         .onSnapshot((querySnapshot) => {
-          const data = querySnapshot.docs.map((doc) => {
+          const data = querySnapshot?.docs?.map((doc) => {
             return {
               id: doc.id,
               ...doc.data(),
@@ -45,8 +45,11 @@ export function Orders() {
       <Filters onFilter={setStatus} />
 
       <Header>
-        <Title>Chamados {status === "open" ? "aberto" : "encerrado"}</Title>
-        <Counter>{orders.length}</Counter>
+        <Title>
+          Chamados{" "}
+          {status === "open" ? "aberto" : status === "all" ? "" : "encerrado"}
+        </Title>
+        <Counter>{orders?.length}</Counter>
       </Header>
 
       {isLoading ? (

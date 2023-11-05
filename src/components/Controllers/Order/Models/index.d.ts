@@ -1,6 +1,6 @@
 export interface DataProps {
   id: string;
-  status: "open" | "closed";
+  status: "all" | "open" | "closed";
   patrimony: string;
   equipment: string;
   description: string;

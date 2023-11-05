@@ -25,7 +25,6 @@ export function NewOrder() {
       type: editActionTypes.CLOSE,
     });
   };
-  console.log(isOpen);
 
   function handleSnapPress() {
     bottomSheetRef.current?.present();

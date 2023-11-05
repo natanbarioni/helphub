@@ -72,7 +72,7 @@ export function Order({ data }: OrderProps) {
 
       <Content>
         <Header>
-          <Title>{data.description}</Title>
+          <Title>{data.equipment}</Title>
           <MaterialIcons
             name={data.status === "open" ? "hourglass-empty" : "check-circle"}
             size={24}

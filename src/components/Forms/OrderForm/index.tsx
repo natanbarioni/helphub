@@ -13,8 +13,9 @@ import { RootState } from "src/redux/Models";
 import editActionTypes from "../../../redux/edit/action-types";
 
 export function OrderForm() {
-  const { editDescription, editEquipment, editPatrimony, id } =
-    useSelector((rootReducer: RootState) => rootReducer.editReducer);
+  const { editDescription, editEquipment, editPatrimony, id } = useSelector(
+    (rootReducer: RootState) => rootReducer.editReducer
+  );
   const dispatch = useDispatch();
 
   const [patrimony, setPatrimony] = useState(editPatrimony || "");
@@ -92,7 +93,7 @@ export function OrderForm() {
       />
 
       <Button
-        title="Enviar chamado"
+        title={!id ? "Enviar chamado" : "Editar chamado"}
         isLoading={isLoading}
         onPress={!id ? handleNewOrder : handleEditOrder}
       />
