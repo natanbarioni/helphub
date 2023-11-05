@@ -10,17 +10,16 @@ import { TextArea } from "@components/Controllers/TextArea";
 import { Alert } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "src/redux/Models";
+import editActionTypes from "../../../redux/edit/action-types";
 
 export function OrderForm() {
-  const { editDescription, editEquipment, editPatrimony, id, isOpen } =
+  const { editDescription, editEquipment, editPatrimony, id } =
     useSelector((rootReducer: RootState) => rootReducer.editReducer);
   const dispatch = useDispatch();
 
-  const [patrimony, setPatrimony] = useState(isOpen ? editPatrimony || "" : "");
-  const [equipment, setEquipment] = useState(isOpen ? editEquipment || "" : "");
-  const [description, setDescription] = useState(
-    isOpen ? editDescription || "" : ""
-  );
+  const [patrimony, setPatrimony] = useState(editPatrimony || "");
+  const [equipment, setEquipment] = useState(editEquipment || "");
+  const [description, setDescription] = useState(editDescription || "");
 
   const [isLoading, setIsLoading] = useState(false);
 
@@ -40,7 +39,7 @@ export function OrderForm() {
       })
       .then(() => {
         dispatch({
-          type: "edit/close",
+          type: editActionTypes.CLOSE,
         });
         Alert.alert("Chamado", "Chamado aberto com sucesso!");
       })
@@ -63,7 +62,7 @@ export function OrderForm() {
       })
       .then(() => {
         dispatch({
-          type: "edit/close",
+          type: editActionTypes.CLOSE,
         });
         Alert.alert("Chamado", "Chamado editado.");
       })
@@ -95,7 +94,7 @@ export function OrderForm() {
       <Button
         title="Enviar chamado"
         isLoading={isLoading}
-        onPress={!isOpen ? handleNewOrder : handleEditOrder}
+        onPress={!id ? handleNewOrder : handleEditOrder}
       />
     </Form>
   );

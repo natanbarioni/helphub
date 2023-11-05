@@ -19,6 +19,7 @@ import {
   Footer,
 } from "./styles";
 import { OrderProps } from "./Models";
+import editActionTypes from "../../../redux/edit/action-types";
 
 export function Order({ data }: OrderProps) {
   const theme = useTheme();
@@ -26,10 +27,10 @@ export function Order({ data }: OrderProps) {
 
   const handlerEdit = () => {
     dispatch({
-      type: "edit/open",
+      type: editActionTypes.OPEN,
     });
     dispatch({
-      type: "edit/edit",
+      type: editActionTypes.EDIT,
       payload: {
         id: data.id,
         editPatrimony: data.patrimony,
@@ -51,7 +52,7 @@ export function Order({ data }: OrderProps) {
   }
 
   const handlerOrder = () => {
-    Alert.alert("O que deseja fazer?", "Escolhe uma opção", [
+    Alert.alert("O que deseja fazer?", "Escolha uma opção", [
       {
         text: "Excluir",
         onPress: () => handlerDeleteOrder(),
