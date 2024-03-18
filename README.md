@@ -1,4 +1,4 @@
-![App Screenshot](.github/cover.png)
+
 
 # HELP.Desk
 App to manage maintenance calls. App to manage maintenance calls. This application was created for the purpose of studies.
