@@ -8,11 +8,20 @@ import { Input } from "@components/Controllers/Input";
 import { Button } from "@components/Controllers/Button";
 import { TextArea } from "@components/Controllers/TextArea";
 import { Alert } from "react-native";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "src/redux/Models";
+import editActionTypes from "../../../redux/edit/action-types";
 
 export function OrderForm() {
-  const [patrimony, setPatrimony] = useState("");
-  const [equipment, setEquipment] = useState("");
-  const [description, setDescription] = useState("");
+  const { editDescription, editEquipment, editPatrimony, id } = useSelector(
+    (rootReducer: RootState) => rootReducer.editReducer
+  );
+  const dispatch = useDispatch();
+
+  const [patrimony, setPatrimony] = useState(editPatrimony || "");
+  const [equipment, setEquipment] = useState(editEquipment || "");
+  const [description, setDescription] = useState(editDescription || "");
+
   const [isLoading, setIsLoading] = useState(false);
 
   function handleNewOrder() {
@@ -29,22 +38,64 @@ export function OrderForm() {
         status: "open",
         created_at: firestore.FieldValue.serverTimestamp(),
       })
-      .then(() => Alert.alert("Chamado", "Chamado aberto com sucesso!"))
-      .catch((error) => console.log(error))
-      .finally(() => setIsLoading(false));
+      .then(() => {
+        dispatch({
+          type: editActionTypes.CLOSE,
+        });
+        Alert.alert("Chamado", "Chamado aberto com sucesso!");
+      })
+      .catch((error) => {
+        console.log(error);
+        setIsLoading(false);
+      });
+  }
+
+  function handleEditOrder() {
+    setIsLoading(true);
+
+    firestore()
+      .collection("orders")
+      .doc(id)
+      .update({
+        patrimony,
+        description,
+        equipment,
+      })
+      .then(() => {
+        dispatch({
+          type: editActionTypes.CLOSE,
+        });
+        Alert.alert("Chamado", "Chamado editado.");
+      })
+      .catch((error) => {
+        console.log(error);
+        setIsLoading(false);
+      });
   }
 
   return (
     <Form>
       <Title>Novo chamado</Title>
-      <Input placeholder="Número do Patrimônio" onChangeText={setPatrimony} />
-      <Input placeholder="Equipamento" onChangeText={setEquipment} />
-      <TextArea placeholder="Descrição" onChangeText={setDescription} />
+      <Input
+        placeholder="Número do Patrimônio"
+        value={patrimony}
+        onChangeText={setPatrimony}
+      />
+      <Input
+        placeholder="Equipamento"
+        value={equipment}
+        onChangeText={setEquipment}
+      />
+      <TextArea
+        placeholder="Descrição"
+        value={description}
+        onChangeText={setDescription}
+      />
 
       <Button
-        title="Enviar chamado"
+        title={!id ? "Enviar chamado" : "Editar chamado"}
         isLoading={isLoading}
-        onPress={handleNewOrder}
+        onPress={!id ? handleNewOrder : handleEditOrder}
       />
     </Form>
   );

@@ -1,5 +1,6 @@
-export type DataProps = OrderStyleProps & {
+export interface DataProps {
   id: string;
+  status: "all" | "open" | "closed";
   patrimony: string;
   equipment: string;
   description: string;
@@ -7,8 +8,8 @@ export type DataProps = OrderStyleProps & {
     nanoseconds: number;
     seconds: number;
   };
-};
+}
 
-export type OrderProps = {
+export interface OrderProps {
   data: DataProps;
-};
+}

@@ -19,6 +19,7 @@ import {
   Footer,
 } from "./styles";
 import { OrderProps } from "./Models";
+import editActionTypes from "../../../redux/edit/action-types";
 
 export function Order({ data }: OrderProps) {
   const theme = useTheme();
@@ -26,7 +27,16 @@ export function Order({ data }: OrderProps) {
 
   const handlerEdit = () => {
     dispatch({
-      type: "edit/open",
+      type: editActionTypes.OPEN,
+    });
+    dispatch({
+      type: editActionTypes.EDIT,
+      payload: {
+        id: data.id,
+        editPatrimony: data.patrimony,
+        editEquipment: data.equipment,
+        editDescription: data.description,
+      },
     });
   };
 
@@ -42,7 +52,7 @@ export function Order({ data }: OrderProps) {
   }
 
   const handlerOrder = () => {
-    Alert.alert("O que deseja fazer?", "Escolhe uma opção", [
+    Alert.alert("O que deseja fazer?", "Escolha uma opção", [
       {
         text: "Excluir",
         onPress: () => handlerDeleteOrder(),
@@ -62,7 +72,7 @@ export function Order({ data }: OrderProps) {
 
       <Content>
         <Header>
-          <Title>{data.description}</Title>
+          <Title>{data.equipment}</Title>
           <MaterialIcons
             name={data.status === "open" ? "hourglass-empty" : "check-circle"}
             size={24}

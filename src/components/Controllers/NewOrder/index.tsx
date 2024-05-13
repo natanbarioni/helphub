@@ -10,6 +10,7 @@ import { Background } from "./styles";
 import { Button } from "@components/Controllers/Button";
 import { OrderForm } from "@components/Forms/OrderForm";
 import { RootState } from "src/redux/Models";
+import editActionTypes from "../../../redux/edit/action-types";
 
 export function NewOrder() {
   const bottomSheetRef = useRef<BottomSheetModal>(null);
@@ -21,7 +22,7 @@ export function NewOrder() {
 
   const onDismiss = () => {
     dispatch({
-      type: "edit/close",
+      type: editActionTypes.CLOSE,
     });
   };
 
@@ -29,13 +30,25 @@ export function NewOrder() {
     bottomSheetRef.current?.present();
   }
 
+  function handleClose() {
+    bottomSheetRef.current?.forceClose();
+  }
+
   useEffect(() => {
     isOpen && handleSnapPress();
+    !isOpen && handleClose();
   }, [isOpen]);
 
   return (
     <>
-      <Button title="Novo chamado" onPress={handleSnapPress} />
+      <Button
+        title="Novo chamado"
+        onPress={() => {
+          dispatch({
+            type: editActionTypes.OPEN,
+          });
+        }}
+      />
 
       <BottomSheetModalProvider>
         <BottomSheetModal
